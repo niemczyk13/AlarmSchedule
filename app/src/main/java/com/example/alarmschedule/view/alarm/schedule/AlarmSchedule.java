@@ -10,9 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.example.alarmschedule.R;
+import com.example.alarmschedule.view.alarm.schedule.date.AlarmDate;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Calendar;
+
 public class AlarmSchedule extends LinearLayout {
+    private AlarmDate alarmDate;
     private DaysButtons daysButtons;
     private LinearLayout firstLineLayout; //Napis i przycisk kalendarza
     private LinearLayout secondLineLayout; //Przyciski dni tygodnia
@@ -41,6 +45,11 @@ public class AlarmSchedule extends LinearLayout {
         setPropertiesToMainLinearLayout();
         addViewsToMainLinearLayout();
 
+        daysButtons.addOnClickDayButtonListener(() -> {
+            //TODO kliknę przycisk i w DaysButtons wszystko się wykona a później wywoła poniższy kod
+
+
+        });
     }
 
     private void addViewsToMainLinearLayout() {
@@ -69,6 +78,7 @@ public class AlarmSchedule extends LinearLayout {
         for (MaterialButton button : daysButtons.getDaysButtons()) {
             secondLineLayout.addView(button);
         }
+        secondLineLayout.addView(daysButtons.getCheckAllDays());
     }
 
     private void setPropertiesToSecondLinearLayout() {
@@ -110,6 +120,16 @@ public class AlarmSchedule extends LinearLayout {
         par.topMargin = 50;
         info.setLayoutParams(par);
         info.setText("Tutaj będzie info!");
+    }
+
+    //TODO przy zmianie czasu
+    public void setTime(int hour, int minute) {
+
+    }
+
+    //TODO - przy wczytywaniu do edycji
+    public void setDateTime(Calendar calendar) {
+
     }
 
     public interface DayButtonClickListener {
