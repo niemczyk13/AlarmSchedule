@@ -42,7 +42,7 @@ public class ViewBuilder {
         secondLineLayout.setLayoutParams(params);
         secondLineLayout.setOrientation(LinearLayout.HORIZONTAL);
         //secondLineLayout.setClickable(false);
-        secondLineLayout.setClipChildren(true);
+        //secondLineLayout.setClipChildren(true);
     }
 
     private void createViews() {

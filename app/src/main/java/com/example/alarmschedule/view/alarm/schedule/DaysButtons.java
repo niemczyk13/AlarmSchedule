@@ -47,9 +47,9 @@ public class DaysButtons {
         int dp = 55;
         params.height = (int) ((dp * scale) + 0.5f);
         checkAllDays.setLayoutParams(params);
-        checkAllDays.setClickable(true);
+        //checkAllDays.setClickable(true);
         checkAllDays.setId(View.generateViewId());
-        checkAllDays.setOnTouchListener(this::onTouch);
+        //checkAllDays.setOnTouchListener(this::onTouch);
         checkAllDays.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
     }
 
@@ -61,8 +61,9 @@ public class DaysButtons {
         for (int i = 0; i < daysButtons.length; i++) {
             MaterialButton button = createDayButton(context, scale, daysNames[i]);
             button.setId(View.generateViewId());
-            //button.setOnClickListener(this::onClick);
-            button.setOnTouchListener(this::onTouch);
+            button.setOnClickListener(this::onClick);
+            button.callOnClick();
+            //button.setOnTouchListener(this::onTouch);
             daysButtons[i] = button;
         }
     }

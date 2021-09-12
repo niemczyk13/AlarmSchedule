@@ -57,7 +57,7 @@ public class AlarmSchedule extends LinearLayout {
     private void setPropertiesToMainLinearLayout() {
         setOrientation(VERTICAL);
         //setClickable(false);
-        setClipChildren(true);
+        //setClipChildren(true);
         LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         super.setLayoutParams(mainParams);
     }
