@@ -1,56 +1,74 @@
 package com.example.alarmschedule.view.alarm.schedule;
 
 import android.content.Context;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
-
-import androidx.core.content.ContextCompat;
 
 import com.example.alarmschedule.R;
 import com.google.android.material.button.MaterialButton;
 
 public class DaysButtons {
     private MaterialButton[] daysButtons;
-    private MaterialButton checkAllDays;
-    private Week days;
+    private ImageButton checkAllDaysButton;
     private String[] daysNames;
+    private OnClickDayButtonListener onClickDayButtonListener;
 
     public DaysButtons(Context context) {
         createDaysNames();
         createButtons(context);
-        createOnClickListener();
-    }
-
-    private void createOnClickListener() {
-        View.OnClickListener onClickListener = view -> {
-            //TODO tutaj zaznaczanie przycisków i wyświetlanie komunikatu
-            //TODO musimy dać do tamtego widoku listener, który nasłuchuje zmianę informacji
-        };
-        setOnClickListener(onClickListener);
     }
 
     private void createButtons(Context context) {
         createDaysButtons(context);
         createCheckAllDaysButton(context);
-
     }
 
     private void createCheckAllDaysButton(Context context) {
         //TODO dodać metodę nasłuchującą
         final float scale = context.getResources().getDisplayMetrics().density;
-        checkAllDays = new MaterialButton(context);
+        checkAllDaysButton = new ImageButton(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.weight = 3;
         params.leftMargin = 2;
         int dp = 55;
         params.height = (int) ((dp * scale) + 0.5f);
-        checkAllDays.setLayoutParams(params);
-        //checkAllDays.setClickable(true);
-        checkAllDays.setId(View.generateViewId());
-        //checkAllDays.setOnTouchListener(this::onTouch);
-        checkAllDays.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
+        int dp2 = 100;
+        params.width = (int) ((dp2 * scale) + 0.5f);
+        checkAllDaysButton.setLayoutParams(params);
+        checkAllDaysButton.setId(View.generateViewId());
+        checkAllDaysButton.setOnClickListener(this::onAllDaysButtonClick);
+        checkAllDaysButton.setImageResource(R.drawable.ic_baseline_select_all_24);
+        //checkAllDays.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
+    }
+
+    private void onAllDaysButtonClick(View view) {
+        if (allDayButtonIsChecked()) {
+            uncheckAllDays();
+        } else {
+            checkAllDaysButtons();
+        }
+        if (onClickDayButtonListener != null) {
+            onClickDayButtonListener.onClick();
+        }
+    }
+
+    private void checkAllDaysButtons() {
+        for (MaterialButton button : daysButtons) {
+            button.setChecked(true);
+        }
+    }
+
+    private boolean allDayButtonIsChecked() {
+        int count = 0;
+        for (MaterialButton button : daysButtons) {
+            if (button.isChecked()) {
+                count++;
+            }
+        }
+
+        return count == daysButtons.length;
     }
 
     private void createDaysButtons(Context context) {
@@ -61,38 +79,20 @@ public class DaysButtons {
         for (int i = 0; i < daysButtons.length; i++) {
             MaterialButton button = createDayButton(context, scale, daysNames[i]);
             button.setId(View.generateViewId());
-            button.setOnClickListener(this::onClick);
-            button.callOnClick();
-            //button.setOnTouchListener(this::onTouch);
+            button.setOnClickListener(this::onDayButtonClick);
             daysButtons[i] = button;
         }
     }
 
-    private void onClick(View view) {
-        System.out.println("OnClick: " + view.getId());
-    }
-
-    private boolean onTouch(View view, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
-            for (MaterialButton day : daysButtons) {
-                System.out.println(day.getId() + " == " + view.getId());
-                if (day.getId() == view.getId()) {
-                    if (day.isChecked()) {
-                        day.setChecked(false);
-                    } else {
-                        System.out.println("!!!!");
-
-                        day.setChecked(true);
-                    }
-                }
-            }
-
-            for (MaterialButton day : daysButtons) {
-                System.out.println(day.getText() + ", " + day.isChecked());
+    private void onDayButtonClick(View view) {
+        for (MaterialButton button : daysButtons) {
+            if (button.getId() == view.getId()) {
+                button.setChecked(button.isChecked());
             }
         }
-
-        return false;
+        if (onClickDayButtonListener != null) {
+            onClickDayButtonListener.onClick();
+        }
     }
 
     private MaterialButton createDayButton(Context context, float scale, String daysName) {
@@ -106,9 +106,10 @@ public class DaysButtons {
         params.height = (int) ((dp * scale) + 0.5f);
         button.setLayoutParams(params);
         button.setPadding(0, 0, 0, 0);
-        button.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
+        button.setCheckable(true);
+        //button.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
         //button.setCheckable(true);
-        System.out.println(button.isCheckable());
+        //System.out.println(button.isCheckable());
         return button;
     }
 
@@ -127,23 +128,46 @@ public class DaysButtons {
         return daysButtons;
     }
 
-    public MaterialButton getCheckAllDays() {
-        return checkAllDays;
+    public ImageButton getCheckAllDaysButton() {
+        return checkAllDaysButton;
     }
 
-    private void setOnClickListener(View.OnClickListener onClickListener) {
+    public boolean isSchedule() {
         for (MaterialButton button : daysButtons) {
-            button.setOnClickListener(onClickListener);
+            if (button.isChecked()) {
+                return true;
+            }
         }
+        return false;
     }
 
-    public void addOnClickDayButtonListener(AlarmSchedule.DayButtonClickListener dayButtonClickListener) {
+    public Week getWeek() {
+        Week week = new Week();
+        week.setDay(DayOfWeek.MONDAY, daysButtons[0].isChecked());
+        week.setDay(DayOfWeek.TUESDAY, daysButtons[1].isChecked());
+        week.setDay(DayOfWeek.WEDNESDAY, daysButtons[2].isChecked());
+        week.setDay(DayOfWeek.THURSDAY, daysButtons[3].isChecked());
+        week.setDay(DayOfWeek.FRIDAY, daysButtons[4].isChecked());
+        week.setDay(DayOfWeek.SATURDAY, daysButtons[5].isChecked());
+        week.setDay(DayOfWeek.SUNDAY, daysButtons[6].isChecked());
+
+        return week;
+    }
+
+    public void addOnClickDayButtonListener(OnClickDayButtonListener onClickDayButtonListener) {
+        this.onClickDayButtonListener = onClickDayButtonListener;
+    }
+
+    public void uncheckAllDays() {
+        for (MaterialButton button : daysButtons) {
+            button.setChecked(false);
+        }
     }
 
     //TODO metoda odznacz wszystkie - kiedy kliniemy na kalendarzu OKEJ
     //TODO tutaj zaznaczanie
 
-    public interface onClickDayButtonListener {
+    public interface OnClickDayButtonListener {
         void onClick();
     }
 }

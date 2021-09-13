@@ -2,19 +2,18 @@ package com.example.alarmschedule.view.alarm.schedule;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.example.alarmschedule.view.alarm.schedule.date.AlarmDate;
+import com.example.alarmschedule.view.alarm.schedule.date.AlarmDateTimeLogic;
 
 import java.util.Calendar;
 
 public class AlarmSchedule extends LinearLayout {
     private ViewBuilder viewBuilder;
-    private AlarmDate alarmDate;
+    private AlarmDateTimeLogic alarmDateTime;
 
     private DaysButtons daysButtons;
     private InfoTextView infoTextView;
@@ -41,6 +40,27 @@ public class AlarmSchedule extends LinearLayout {
         setPropertiesToMainLinearLayout();
         addViewsToMainLinearLayout();
         getViewsFromBuilder();
+        createAlarmDateTime();
+        addOnClickDayButtonListener();
+        addSelectDateListener();
+    }
+
+    private void createAlarmDateTime() {
+        //TODO w ramach testu data na sztywno
+        alarmDateTime = new AlarmDateTimeLogic(Calendar.getInstance());
+        calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
+    }
+
+    private void addOnClickDayButtonListener() {
+        daysButtons.addOnClickDayButtonListener(() -> {
+            System.out.println("isSchedule: " + daysButtons.isSchedule());
+        });
+    }
+
+    private void addSelectDateListener() {
+        calendarImageButton.addSelectDateListener(date -> {
+            System.out.println("Wybrano datę: " + date);
+        });
     }
 
     private void getViewsFromBuilder() {
@@ -56,14 +76,16 @@ public class AlarmSchedule extends LinearLayout {
 
     private void setPropertiesToMainLinearLayout() {
         setOrientation(VERTICAL);
-        //setClickable(false);
-        //setClipChildren(true);
         LinearLayout.LayoutParams mainParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         super.setLayoutParams(mainParams);
     }
 
     //TODO przy zmianie czasu
     public void setTime(int hour, int minute) {
+        //dodanie do alarmdatetime
+        //pobranie calendar i wysłanie do calednarImageButton
+        alarmDateTime.setTime(hour, minute);
+        calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
 
     }
 

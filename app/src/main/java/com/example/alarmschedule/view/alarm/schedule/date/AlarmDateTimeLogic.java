@@ -2,8 +2,12 @@ package com.example.alarmschedule.view.alarm.schedule.date;
 
 import java.util.Calendar;
 
-public class AlarmDate {
-    private Calendar calendar;
+public class AlarmDateTimeLogic {
+    private Calendar dateTime;
+
+    public AlarmDateTimeLogic(Calendar calendar) {
+        this.dateTime = calendar;
+    }
 
     private boolean isAfterNow(Calendar calendar) {
         Calendar now = Calendar.getInstance();
@@ -17,11 +21,15 @@ public class AlarmDate {
     }
 
     public void setDate(Calendar calendar) {
-        this.calendar = calendar;
+        this.dateTime = calendar;
     }
 
     public void setTime(int hour, int minute) {
-        calendar.set(Calendar.HOUR, hour);
-        calendar.set(Calendar.MINUTE, minute);
+        dateTime.set(Calendar.HOUR, hour);
+        dateTime.set(Calendar.MINUTE, minute);
+    }
+
+    public Calendar getDateTime() {
+        return dateTime;
     }
 }

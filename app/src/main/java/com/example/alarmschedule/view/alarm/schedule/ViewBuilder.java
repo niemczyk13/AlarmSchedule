@@ -1,7 +1,6 @@
 package com.example.alarmschedule.view.alarm.schedule;
 
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -23,7 +22,6 @@ public class ViewBuilder {
         addViewsToLayout();
     }
 
-
     private void createLayouts() {
         createFirstLayout();
         createSecondLayout();
@@ -41,8 +39,6 @@ public class ViewBuilder {
         params.bottomMargin = 1;
         secondLineLayout.setLayoutParams(params);
         secondLineLayout.setOrientation(LinearLayout.HORIZONTAL);
-        //secondLineLayout.setClickable(false);
-        //secondLineLayout.setClipChildren(true);
     }
 
     private void createViews() {
@@ -69,7 +65,7 @@ public class ViewBuilder {
         for (MaterialButton button : daysButtons.getDaysButtons()) {
             secondLineLayout.addView(button);
         }
-        secondLineLayout.addView(daysButtons.getCheckAllDays());
+        secondLineLayout.addView(daysButtons.getCheckAllDaysButton());
     }
 
     public LinearLayout getFirstLineLayout() {

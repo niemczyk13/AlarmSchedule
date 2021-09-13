@@ -8,10 +8,14 @@ import android.widget.LinearLayout;
 
 import com.example.alarmschedule.R;
 
+import java.util.Calendar;
+
 public class CalendarImageButton {
     private final Context context;
+    private Calendar alarmDateTime;
     private LinearLayout calendarButtonLinearLayout;
     private ImageButton calendarButton;
+    private SelectDateListener selectDateListener;
 
     public CalendarImageButton(Context context, int weight) {
         this.context = context;
@@ -22,6 +26,14 @@ public class CalendarImageButton {
         createLinerLayout(weight);
         createImageButton();
         addImageButtonToLinearLayout();
+
+        calendarButton.setOnClickListener(this::onClick);
+    }
+
+    //TODO uruchomienie okna z datą
+    private void onClick(View view) {
+        System.out.println("ImageButton!");
+        //jeżeli wybrano datę to metoda select() z interfejsu
     }
 
     private void createLinerLayout(int weight) {
@@ -48,5 +60,17 @@ public class CalendarImageButton {
 
     public View getView() {
         return calendarButtonLinearLayout;
+    }
+
+    public void addSelectDateListener(SelectDateListener selectDateListener) {
+        this.selectDateListener = selectDateListener;
+    }
+
+    public void setAlarmDateTime(Calendar alarmDate) {
+        this.alarmDateTime = alarmDate;
+    }
+
+    public interface SelectDateListener {
+        void select(Calendar date);
     }
 }
