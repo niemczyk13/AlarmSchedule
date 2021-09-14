@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/a.niemiec/AndroidStudioProjects/AlarmSchedule/app/src/main/res/drawable/day_button.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/a.niemiec/AndroidStudioProjects/AlarmSchedule/app/src/main/res/drawable/day_button_active.xml" value="0.18611111111111112" />
         <entry key="..\:/Users/a.niemiec/AndroidStudioProjects/AlarmSchedule/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
       </map>
     </option>

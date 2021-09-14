@@ -1,4 +1,6 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.adarm.datetime;
+
+import com.example.alarmschedule.view.alarm.schedule.DayOfWeek;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +19,14 @@ public class Week {
         days.put(DayOfWeek.FRIDAY, false);
         days.put(DayOfWeek.SATURDAY, false);
         days.put(DayOfWeek.SUNDAY, false);
+    }
+
+    public void activeDay(DayOfWeek day) {
+        days.put(day, true);
+    }
+
+    public void deactivateDay(DayOfWeek day) {
+        days.put(day, false);
     }
 
     public void setDay(DayOfWeek day, Boolean checked) {

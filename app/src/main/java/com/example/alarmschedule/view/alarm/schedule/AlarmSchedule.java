@@ -7,13 +7,18 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.example.alarmschedule.view.alarm.schedule.date.AlarmDateTimeLogic;
+import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
+import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
+import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.WeekSchedule;
+import com.example.alarmschedule.view.alarm.schedule.logic.AlarmDateTimeLogic;
 
 import java.util.Calendar;
 
 public class AlarmSchedule extends LinearLayout {
+    private AlarmDateTimeLogic logic;
+
     private ViewBuilder viewBuilder;
-    private AlarmDateTimeLogic alarmDateTime;
+    private AlarmDateTime alarmDateTime;
 
     private DaysButtons daysButtons;
     private InfoTextView infoTextView;
@@ -40,27 +45,31 @@ public class AlarmSchedule extends LinearLayout {
         setPropertiesToMainLinearLayout();
         addViewsToMainLinearLayout();
         getViewsFromBuilder();
+        createAlarmDateTimeLogic();
         createAlarmDateTime();
-        addOnClickDayButtonListener();
-        addSelectDateListener();
+    }
+
+    private void createAlarmDateTimeLogic() {
+        logic = new AlarmDateTimeLogic(daysButtons, infoTextView, calendarImageButton);
     }
 
     private void createAlarmDateTime() {
         //TODO w ramach testu data na sztywno
-        alarmDateTime = new AlarmDateTimeLogic(Calendar.getInstance());
-        calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
-    }
+        //alarmDateTime = new AlarmDateTimeLogic(Calendar.getInstance());
+        //calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
+        Week week = new Week();
+        week.activeDay(DayOfWeek.MONDAY);
+        week.activeDay(DayOfWeek.FRIDAY);
+        WeekSchedule weekSchedule = new WeekSchedule(true, week);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2021, 9, 13, 12,0);
+        alarmDateTime = new AlarmDateTime(calendar, weekSchedule);
+        //calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
+        //week.setDay(DayOfWeek.MONDAY);
 
-    private void addOnClickDayButtonListener() {
-        daysButtons.addOnClickDayButtonListener(() -> {
-            System.out.println("isSchedule: " + daysButtons.isSchedule());
-        });
-    }
+        //TODO delegacja do logic - żeby dać dobrą datę w alarmDateTime
 
-    private void addSelectDateListener() {
-        calendarImageButton.addSelectDateListener(date -> {
-            System.out.println("Wybrano datę: " + date);
-        });
+        daysButtons.setWeek(alarmDateTime.getWeekSchedule());
     }
 
     private void getViewsFromBuilder() {
@@ -84,7 +93,8 @@ public class AlarmSchedule extends LinearLayout {
     public void setTime(int hour, int minute) {
         //dodanie do alarmdatetime
         //pobranie calendar i wysłanie do calednarImageButton
-        alarmDateTime.setTime(hour, minute);
+        //alarmDateTime.setTime(hour, minute);
+        //TODO delegacja do logic
         calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
 
     }

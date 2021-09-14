@@ -1,6 +1,6 @@
 package com.example.alarmschedule.view.alarm.schedule.text;
 
-import com.example.alarmschedule.view.alarm.schedule.Week;
+import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
 
 import java.util.Calendar;
 
