@@ -121,11 +121,8 @@ public class DaysButtons {
     private void changeButtonView(MaterialButton button) {
         if (button.isChecked()) {
             setCheckColorButton(button);
-            //button.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button_active));
-            //button.setBackgroundColor(Color.rgb(00, 12, 33));
         } else {
             setUncheckColorButton(button);
-            //button.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
         }
     }
 
@@ -142,9 +139,6 @@ public class DaysButtons {
         button.setPadding(0, 0, 0, 0);
         button.setCheckable(true);
         setUncheckColorButton(button);
-        //button.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
-        //button.setCheckable(true);
-        //System.out.println(button.isCheckable());
         return button;
     }
 
