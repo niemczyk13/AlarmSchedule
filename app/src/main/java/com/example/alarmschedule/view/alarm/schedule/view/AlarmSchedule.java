@@ -1,4 +1,4 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,11 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
-import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
-import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.WeekSchedule;
 import com.example.alarmschedule.view.alarm.schedule.logic.AlarmDateTimeLogic;
-
-import java.util.Calendar;
 
 public class AlarmSchedule extends LinearLayout {
     private AlarmDateTimeLogic logic;

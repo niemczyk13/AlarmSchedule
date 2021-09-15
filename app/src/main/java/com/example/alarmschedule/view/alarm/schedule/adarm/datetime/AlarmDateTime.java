@@ -30,8 +30,4 @@ public class AlarmDateTime {
     public boolean isSchedule() {
         return weekSchedule.isActive();
     }
-
-    public void setIsSchedule(boolean isSchedule) {
-        weekSchedule.setActive(isSchedule);
-    }
 }

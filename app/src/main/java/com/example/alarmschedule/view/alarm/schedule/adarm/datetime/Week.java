@@ -1,7 +1,5 @@
 package com.example.alarmschedule.view.alarm.schedule.adarm.datetime;
 
-import com.example.alarmschedule.view.alarm.schedule.DayOfWeek;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,5 +45,12 @@ public class Week {
         daysList.add(days.get(DayOfWeek.SATURDAY));
         daysList.add(days.get(DayOfWeek.SUNDAY));
         return daysList;
+    }
+
+    public boolean isSchedule() {
+        for (Boolean value : days.values()) {
+            if (value) return true;
+        }
+        return false;
     }
 }

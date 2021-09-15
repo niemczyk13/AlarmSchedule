@@ -1,9 +1,12 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.view;
 
 import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.alarmschedule.view.alarm.schedule.view.CalendarImageButton;
+import com.example.alarmschedule.view.alarm.schedule.view.DaysButtons;
+import com.example.alarmschedule.view.alarm.schedule.view.InfoTextView;
 import com.google.android.material.button.MaterialButton;
 
 public class ViewBuilder {

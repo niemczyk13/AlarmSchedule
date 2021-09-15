@@ -1,21 +1,18 @@
 package com.example.alarmschedule.view.alarm.schedule.adarm.datetime;
 
+import java.util.List;
+
 public class WeekSchedule {
     private long id;
-    private boolean isActive;
+
     private Week week;
 
-    public WeekSchedule(boolean isActive, Week week) {
-        this.isActive = isActive;
+    public WeekSchedule(Week week) {
         this.week = week;
     }
 
     public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
+        return week.isSchedule();
     }
 
     public Week getWeek() {
@@ -24,5 +21,9 @@ public class WeekSchedule {
 
     public void setWeek(Week week) {
         this.week = week;
+    }
+
+    public List<Boolean> getOnlySelectedDays() {
+        return week.getDaysWhenMondayIsFirst();
     }
 }

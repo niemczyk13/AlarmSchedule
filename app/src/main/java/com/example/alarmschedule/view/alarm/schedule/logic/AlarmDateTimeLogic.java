@@ -2,12 +2,10 @@ package com.example.alarmschedule.view.alarm.schedule.logic;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.example.alarmschedule.view.alarm.schedule.CalendarImageButton;
-import com.example.alarmschedule.view.alarm.schedule.DaysButtons;
-import com.example.alarmschedule.view.alarm.schedule.InfoTextView;
+import com.example.alarmschedule.view.alarm.schedule.view.CalendarImageButton;
+import com.example.alarmschedule.view.alarm.schedule.view.DaysButtons;
+import com.example.alarmschedule.view.alarm.schedule.view.InfoTextView;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
-
-import java.util.Calendar;
 
 public class AlarmDateTimeLogic {
     private AlarmDateTime alarmDateTime;
@@ -33,6 +31,7 @@ public class AlarmDateTimeLogic {
         daysButtons.setWeek(alarmDateTime.getWeekSchedule());
         calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
         calendarImageButton.setFragmentManager(supportFragmentManager);
+        infoTextView.showInfoText(alarmDateTime);
     }
 
     private void addOnClickDayButtonListener() {

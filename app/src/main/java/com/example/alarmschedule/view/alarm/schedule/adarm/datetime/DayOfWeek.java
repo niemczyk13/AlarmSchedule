@@ -1,4 +1,4 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.adarm.datetime;
 
 public enum DayOfWeek {
     MONDAY,

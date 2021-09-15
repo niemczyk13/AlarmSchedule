@@ -1,4 +1,4 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.view;
 
 import android.content.Context;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package com.example.alarmschedule.view.alarm.schedule;
+package com.example.alarmschedule.view.alarm.schedule.view;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.alarmschedule.R;
+import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.DayOfWeek;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
 import com.google.android.material.button.MaterialButton;
 

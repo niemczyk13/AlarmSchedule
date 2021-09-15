@@ -5,7 +5,7 @@ import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTim
 public class AlarmDateTimeUpdater {
     //TODO
     public static AlarmDateTime update(AlarmDateTime adt) {
-
+        //sprawdzamy isSchedule i na tej podstawie obliczamy nabliższą możliwą datę
         return adt;
     }
 }
