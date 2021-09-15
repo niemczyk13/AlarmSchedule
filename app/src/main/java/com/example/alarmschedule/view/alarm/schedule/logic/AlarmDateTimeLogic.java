@@ -50,5 +50,7 @@ public class AlarmDateTimeLogic {
     //TODO
     public void setDate(int year, int month, int day) {
         System.out.println("DATE: " + year + "-" + month + "-" + day);
+        //TODO AlarmDateTimeUpdater.setDate(...);
+        //TODO odnzaczyć wszystkie dni - zaktualizować DaysButtons
     }
 }
