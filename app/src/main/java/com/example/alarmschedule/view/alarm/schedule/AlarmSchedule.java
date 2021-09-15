@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
@@ -46,41 +47,6 @@ public class AlarmSchedule extends LinearLayout {
         addViewsToMainLinearLayout();
         getViewsFromBuilder();
         createAlarmDateTimeLogic();
-        createAlarmDateTime();
-    }
-
-    private void createAlarmDateTimeLogic() {
-        logic = new AlarmDateTimeLogic(daysButtons, infoTextView, calendarImageButton);
-    }
-
-    private void createAlarmDateTime() {
-        //TODO w ramach testu data na sztywno
-        //alarmDateTime = new AlarmDateTimeLogic(Calendar.getInstance());
-        //calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
-        Week week = new Week();
-        week.activeDay(DayOfWeek.MONDAY);
-        week.activeDay(DayOfWeek.FRIDAY);
-        WeekSchedule weekSchedule = new WeekSchedule(true, week);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2021, 9, 13, 12,0);
-        alarmDateTime = new AlarmDateTime(calendar, weekSchedule);
-        //calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
-        //week.setDay(DayOfWeek.MONDAY);
-
-        //TODO delegacja do logic - żeby dać dobrą datę w alarmDateTime
-
-        daysButtons.setWeek(alarmDateTime.getWeekSchedule());
-    }
-
-    private void getViewsFromBuilder() {
-        infoTextView = viewBuilder.getInfoTextView();
-        calendarImageButton = viewBuilder.getCalendarImageButton();
-        daysButtons = viewBuilder.getDaysButtons();
-    }
-
-    private void addViewsToMainLinearLayout() {
-        super.addView(viewBuilder.getFirstLineLayout());
-        super.addView(viewBuilder.getSecondLineLayout());
     }
 
     private void setPropertiesToMainLinearLayout() {
@@ -89,22 +55,30 @@ public class AlarmSchedule extends LinearLayout {
         super.setLayoutParams(mainParams);
     }
 
-    //TODO przy zmianie czasu
+    private void addViewsToMainLinearLayout() {
+        super.addView(viewBuilder.getFirstLineLayout());
+        super.addView(viewBuilder.getSecondLineLayout());
+    }
+
+    private void getViewsFromBuilder() {
+        infoTextView = viewBuilder.getInfoTextView();
+        calendarImageButton = viewBuilder.getCalendarImageButton();
+        daysButtons = viewBuilder.getDaysButtons();
+    }
+
+    private void createAlarmDateTimeLogic() {
+        logic = new AlarmDateTimeLogic(daysButtons, infoTextView, calendarImageButton);
+    }
+
+    public void initialize(AlarmDateTime alarmDateTime, FragmentManager supportFragmentManager) {
+        logic.initialize(alarmDateTime, supportFragmentManager);
+    }
+
     public void setTime(int hour, int minute) {
-        //dodanie do alarmdatetime
-        //pobranie calendar i wysłanie do calednarImageButton
-        //alarmDateTime.setTime(hour, minute);
-        //TODO delegacja do logic
-        calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
-
+        logic.setTime(hour, minute);
     }
 
-    //TODO - przy wczytywaniu do edycji
-    public void setDateTime(Calendar calendar) {
-
-    }
-
-    public interface DayButtonClickListener {
-        void onClick();
+    public void setDate(int year, int month, int day) {
+        logic.setDate(year, month + 1, day);
     }
 }

@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <com.example.alarmschedule.view.alarm.schedule.AlarmSchedule
+        android:id="@+id/alarm_schedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

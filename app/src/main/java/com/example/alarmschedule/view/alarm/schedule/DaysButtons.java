@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import androidx.core.content.ContextCompat;
-
 import com.example.alarmschedule.R;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
 import com.google.android.material.button.MaterialButton;
@@ -26,31 +24,45 @@ public class DaysButtons {
         createButtons(context);
     }
 
+    private void createDaysNames() {
+        daysNames = new String[7];
+        daysNames[0] = "Pn";
+        daysNames[1] = "Wt";
+        daysNames[2] = "Sr";
+        daysNames[3] = "Cz";
+        daysNames[4] = "Pt";
+        daysNames[5] = "So";
+        daysNames[6] = "N";
+    }
+
     private void createButtons(Context context) {
         this.context = context;
         createDaysButtons(context);
         createCheckAllDaysButton(context);
     }
 
-    private void createCheckAllDaysButton(Context context) {
-        //TODO dodać metodę nasłuchującą
-        final float scale = context.getResources().getDisplayMetrics().density;
-        checkAllDaysButton = new ImageButton(context);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.weight = 3;
-        params.leftMargin = 2;
-        int dp = 55;
-        params.height = (int) ((dp * scale) + 0.5f);
-        int dp2 = 100;
-        params.width = (int) ((dp2 * scale) + 0.5f);
-        checkAllDaysButton.setLayoutParams(params);
-        checkAllDaysButton.setId(View.generateViewId());
-        checkAllDaysButton.setOnClickListener(this::onAllDaysButtonClick);
-        checkAllDaysButton.setImageResource(R.drawable.ic_baseline_select_all_24);
-        //checkAllDays.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
+    private void createDaysButtons(Context context) {
+        daysButtons = new MaterialButton[7];
+        for (int i = 0; i < daysButtons.length; i++) {
+            MaterialButton button = createDayButton(context, daysNames[i]);
+            daysButtons[i] = button;
+        }
     }
 
-    public LinearLayout.LayoutParams getDefaultLayoutParams() {
+    private MaterialButton createDayButton(Context context, String daysName) {
+        MaterialButton button = new MaterialButton(context);
+        button.setText(daysName);
+        LinearLayout.LayoutParams params = getDefaultLayoutParamsForDayButton();
+        button.setLayoutParams(params);
+        button.setPadding(0, 0, 0, 0);
+        button.setCheckable(true);
+        setUncheckColorButton(button);
+        button.setId(View.generateViewId());
+        button.setOnClickListener(this::onDayButtonClick);
+        return button;
+    }
+
+    private LinearLayout.LayoutParams getDefaultLayoutParamsForDayButton() {
         final float scale = context.getResources().getDisplayMetrics().density;
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -63,58 +75,25 @@ public class DaysButtons {
         return params;
     }
 
-    private void onAllDaysButtonClick(View view) {
-        if (allDayButtonIsChecked()) {
-            uncheckAllDays();
-        } else {
-            checkAllDaysButtons();
-        }
-        if (onClickDayButtonListener != null) {
-            onClickDayButtonListener.onClick();
-        }
-    }
-
-    private void checkAllDaysButtons() {
-        for (MaterialButton button : daysButtons) {
-            button.setChecked(true);
-            setCheckColorButton(button);
-        }
-    }
-
-    private boolean allDayButtonIsChecked() {
-        int count = 0;
-        for (MaterialButton button : daysButtons) {
-            if (button.isChecked()) {
-                count++;
-            }
-        }
-
-        return count == daysButtons.length;
-    }
-
-    private void createDaysButtons(Context context) {
-        //TODO podzielić na tworzenie i nasłuchiwanie
-        daysButtons = new MaterialButton[7];
-
-        final float scale = context.getResources().getDisplayMetrics().density;
-        for (int i = 0; i < daysButtons.length; i++) {
-            MaterialButton button = createDayButton(context, scale, daysNames[i]);
-            button.setId(View.generateViewId());
-            button.setOnClickListener(this::onDayButtonClick);
-            daysButtons[i] = button;
-        }
+    private void setUncheckColorButton(MaterialButton button) {
+        button.setBackgroundColor(Color.rgb(0, 0, 0));
+        button.setTextColor(Color.rgb(255, 255, 255));
     }
 
     private void onDayButtonClick(View view) {
         for (MaterialButton button : daysButtons) {
-            if (button.getId() == view.getId()) {
-                button.setChecked(button.isChecked());
-                changeButtonView(button);
-            }
+            followTheStepsForTheButtonClicked(button, view);
         }
 
         if (onClickDayButtonListener != null) {
             onClickDayButtonListener.onClick();
+        }
+    }
+
+    private void followTheStepsForTheButtonClicked(MaterialButton button, View view) {
+        if (button.getId() == view.getId()) {
+            button.setChecked(button.isChecked());
+            changeButtonView(button);
         }
     }
 
@@ -131,26 +110,66 @@ public class DaysButtons {
         button.setTextColor(Color.rgb(0,0,0));
     }
 
-    private MaterialButton createDayButton(Context context, float scale, String daysName) {
-        MaterialButton button = new MaterialButton(context);
-        button.setText(daysName);
-        LinearLayout.LayoutParams params = getDefaultLayoutParams();
-        button.setLayoutParams(params);
-        button.setPadding(0, 0, 0, 0);
-        button.setCheckable(true);
-        setUncheckColorButton(button);
-        return button;
+    private void createCheckAllDaysButton(Context context) {
+        //TODO dodać metodę nasłuchującą
+        checkAllDaysButton = new ImageButton(context);
+        LinearLayout.LayoutParams params = getDefaultLayoutParamsForCheckAllDayButton();
+
+        checkAllDaysButton.setLayoutParams(params);
+        checkAllDaysButton.setId(View.generateViewId());
+        checkAllDaysButton.setOnClickListener(this::onAllDaysButtonClick);
+        checkAllDaysButton.setImageResource(R.drawable.ic_baseline_select_all_24);
+        //checkAllDays.setBackground(ContextCompat.getDrawable(context, R.drawable.day_button));
     }
 
-    private void createDaysNames() {
-        daysNames = new String[7];
-        daysNames[0] = "Pn";
-        daysNames[1] = "Wt";
-        daysNames[2] = "Sr";
-        daysNames[3] = "Cz";
-        daysNames[4] = "Pt";
-        daysNames[5] = "So";
-        daysNames[6] = "N";
+    private LinearLayout.LayoutParams getDefaultLayoutParamsForCheckAllDayButton() {
+        final float scale = context.getResources().getDisplayMetrics().density;
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.weight = 3;
+        params.leftMargin = 2;
+        int dp = 55;
+        params.height = (int) ((dp * scale) + 0.5f);
+        int dp2 = 100;
+        params.width = (int) ((dp2 * scale) + 0.5f);
+
+        return params;
+    }
+
+    private void onAllDaysButtonClick(View view) {
+        if (allDayButtonIsChecked()) {
+            uncheckAllDays();
+        } else {
+            checkAllDaysButtons();
+        }
+        if (onClickDayButtonListener != null) {
+            onClickDayButtonListener.onClick();
+        }
+    }
+
+    private boolean allDayButtonIsChecked() {
+        int count = 0;
+        for (MaterialButton button : daysButtons) {
+            if (button.isChecked()) {
+                count++;
+            }
+        }
+
+        return count == daysButtons.length;
+    }
+
+    public void uncheckAllDays() {
+        for (MaterialButton button : daysButtons) {
+            button.setChecked(false);
+            setUncheckColorButton(button);
+        }
+    }
+
+    private void checkAllDaysButtons() {
+        for (MaterialButton button : daysButtons) {
+            button.setChecked(true);
+            setCheckColorButton(button);
+        }
     }
 
     public MaterialButton[] getDaysButtons() {
@@ -187,18 +206,6 @@ public class DaysButtons {
         this.onClickDayButtonListener = onClickDayButtonListener;
     }
 
-    public void uncheckAllDays() {
-        for (MaterialButton button : daysButtons) {
-            button.setChecked(false);
-            setUncheckColorButton(button);
-            }
-    }
-
-    private void setUncheckColorButton(MaterialButton button) {
-        button.setBackgroundColor(Color.rgb(0, 0, 0));
-        button.setTextColor(Color.rgb(255, 255, 255));
-    }
-
     public void setWeek(Week weekSchedule) {
         daysButtons[0].setChecked(weekSchedule.dayIsChecked(DayOfWeek.MONDAY));
         daysButtons[1].setChecked(weekSchedule.dayIsChecked(DayOfWeek.TUESDAY));
@@ -215,9 +222,6 @@ public class DaysButtons {
         }
 
     }
-
-    //TODO metoda odznacz wszystkie - kiedy kliniemy na kalendarzu OKEJ
-    //TODO tutaj zaznaczanie
 
     public interface OnClickDayButtonListener {
         void onClick();

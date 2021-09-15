@@ -1,39 +1,37 @@
 package com.example.alarmschedule.view.alarm.schedule;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.example.alarmschedule.R;
+import com.example.alarmschedule.view.alarm.schedule.fragment.CalendarDialogFragment;
 
 import java.util.Calendar;
 
 public class CalendarImageButton {
     private final Context context;
     private Calendar alarmDateTime;
+    private FragmentManager fragmentManager;
     private LinearLayout calendarButtonLinearLayout;
     private ImageButton calendarButton;
-    private SelectDateListener selectDateListener;
 
     public CalendarImageButton(Context context, int weight) {
         this.context = context;
         createView(weight);
+        calendarButton.setOnClickListener(this::onClick);
     }
 
     private void createView(int weight) {
         createLinerLayout(weight);
         createImageButton();
         addImageButtonToLinearLayout();
-
-        calendarButton.setOnClickListener(this::onClick);
-    }
-
-    //TODO uruchomienie okna z datą
-    private void onClick(View view) {
-        System.out.println("ImageButton!");
-        //jeżeli wybrano datę to metoda select() z interfejsu
     }
 
     private void createLinerLayout(int weight) {
@@ -58,19 +56,31 @@ public class CalendarImageButton {
         calendarButtonLinearLayout.addView(calendarButton);
     }
 
-    public View getView() {
-        return calendarButtonLinearLayout;
+    private void onClick(View view) {
+        showCalendarDialogFragment();
     }
 
-    public void addSelectDateListener(SelectDateListener selectDateListener) {
-        this.selectDateListener = selectDateListener;
+    private void showCalendarDialogFragment() {
+        DialogFragment df = new CalendarDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("hour", Integer.toString(alarmDateTime.get(Calendar.HOUR)));
+        bundle.putString("minute", Integer.toString(alarmDateTime.get(Calendar.MINUTE)));
+        bundle.putString("day", Integer.toString(alarmDateTime.get(Calendar.DAY_OF_MONTH)));
+        bundle.putString("month", Integer.toString(alarmDateTime.get(Calendar.MONTH)));
+        bundle.putString("year", Integer.toString(alarmDateTime.get(Calendar.YEAR)));
+        df.setArguments(bundle);
+        df.show(fragmentManager, "date");
+    }
+
+    public View getView() {
+        return calendarButtonLinearLayout;
     }
 
     public void setAlarmDateTime(Calendar alarmDate) {
         this.alarmDateTime = alarmDate;
     }
 
-    public interface SelectDateListener {
-        void select(Calendar date);
+    public void setFragmentManager(FragmentManager supportFragmentManager) {
+        fragmentManager = supportFragmentManager;
     }
 }
