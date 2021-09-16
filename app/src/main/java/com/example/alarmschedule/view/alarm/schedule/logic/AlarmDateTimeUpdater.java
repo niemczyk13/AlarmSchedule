@@ -12,7 +12,10 @@ public class AlarmDateTimeUpdater {
 
     public static AlarmDateTime update(AlarmDateTime adt) {
         alarmDateTime = adt;
+        System.out.println("AlarmDateTime1: " + alarmDateTime.getDateTime().getTime());
+
         if (alarmDateTime.isSchedule()) {
+            //TODO to do zmiany
             calculateDateForSchedule();
         } else {
             calculateOrdinaryDate();
@@ -20,7 +23,7 @@ public class AlarmDateTimeUpdater {
         return alarmDateTime;
     }
 
-    //TODO
+    //TODO tylko przy przycisku zapisz
     private static void calculateDateForSchedule() {
         //pobieramy week
         //pobieramy dzisiejszy dzień tygodnia
@@ -31,8 +34,27 @@ public class AlarmDateTimeUpdater {
         //
         //jeżeli dzień tygodnia jest dzisijeszy a z calendar wychodzi, że alarm będzie wcześniej to dodajemy 7 dni
         Calendar date = Calendar.getInstance();
-        List<DayOfWeek> days = alarmDateTime.getWeekSchedule().getDaysSortedFromSelectedDay(date.get(Calendar.DAY_OF_WEEK));
+        List<DayOfWeek> days = alarmDateTime.getWeekSchedule().getOnlySelectedDays();
+        for (DayOfWeek day : days) {
+            //alarmDateTime.getDateTime().set(Calendar.DAY_OF_WEEK, day.getValue());
+            date.set(Calendar.DAY_OF_WEEK, day.getValue());
+            alarmDateTime.getDateTime().set(Calendar.YEAR, date.get(Calendar.YEAR));
+            alarmDateTime.getDateTime().set(Calendar.MONTH, date.get(Calendar.MONTH));
+            alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+           // System.out.println("W for: " + alarmDateTime.getDateTime().getTime());
+           // System.out.println("Now : " + Calendar.getInstance().getTime());
+            if (alarmDateTime.getDateTime().after(Calendar.getInstance())) {
+                return;
+            }
+        }
+
+        if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) != days.get(0).getValue())
+            alarmDateTime.getDateTime().set(Calendar.DAY_OF_WEEK, days.get(0).getValue());
+        alarmDateTime.getDateTime().add(Calendar.DATE, 7);
         System.out.println("DAYS: " + days);
+        System.out.println("AlarmDateTime: " + alarmDateTime.getDateTime().getTime());
+
+
     }
 
 

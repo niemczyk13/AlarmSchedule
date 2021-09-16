@@ -70,7 +70,7 @@ public class Week {
         return null;// ScheduleProcessor.filterAndSortSelectionDays(dayOfWeek.getValue(),sortedDays);
     }
 
-    private List<DayOfWeek> getOnlySelectedDays() {
+    public List<DayOfWeek> getOnlySelectedDays() {
         List<DayOfWeek> list = new ArrayList<>();
         for (int i = 0; i < orderOfDays.length; i++) {
             if (days.get(orderOfDays[i])) {
