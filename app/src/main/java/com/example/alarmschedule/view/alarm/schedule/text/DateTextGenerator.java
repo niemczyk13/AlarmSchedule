@@ -15,7 +15,7 @@ public class DateTextGenerator {
         int month = date.get(Calendar.MONTH);
         int dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
         String m = "";
-        switch (month) {
+        switch (month + 1) {
             case 1: m = "Styczeń"; break;
             case 2: m = "Luty"; break;
             case 3: m = "Marzec"; break;

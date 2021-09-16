@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         week.activeDay(DayOfWeek.THURSDAY);
         WeekSchedule weekSchedule = new WeekSchedule(week);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2021, 9, 15, 11,0);
+        calendar.set(2021, 8, 18, 5,9, 0);
         return new AlarmDateTime(calendar, weekSchedule);
     }
 

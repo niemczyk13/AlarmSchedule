@@ -8,7 +8,7 @@ import com.example.alarmschedule.view.alarm.schedule.view.InfoTextView;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
 
 public class AlarmDateTimeLogic {
-    private AlarmDateTime alarmDateTime;
+    //private AlarmDateTime alarmDateTime;
     private DaysButtons daysButtons;
     private InfoTextView infoTextView;
     private CalendarImageButton calendarImageButton;
@@ -27,7 +27,7 @@ public class AlarmDateTimeLogic {
         //TODO godzina zawsze zostaje ta sama, zmieniamy tylko datę
         //TODO w zależności od harmonogramu czy jest czy nie ma
         //alarmDateTime = Static klasa przerabiajca
-        alarmDateTime = AlarmDateTimeUpdater.update(adt);
+        AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.update(adt);
         daysButtons.setWeek(alarmDateTime.getWeekSchedule());
         calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
         calendarImageButton.setFragmentManager(supportFragmentManager);
