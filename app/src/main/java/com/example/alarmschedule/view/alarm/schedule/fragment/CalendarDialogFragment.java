@@ -26,11 +26,12 @@ public class CalendarDialogFragment extends DialogFragment {
     }
 
     private void getAllArguments() {
-        year = Integer.parseInt(getArguments().getString("year"));
-        month = Integer.parseInt(getArguments().getString("month"));
-        day = Integer.parseInt(getArguments().getString("day"));
-        hour = Integer.parseInt(getArguments().getString("hour"));
-        minute = Integer.parseInt(getArguments().getString("minute"));
+        assert getArguments() != null;
+        year = getArguments().getInt("year");
+        month = getArguments().getInt("month");
+        day = getArguments().getInt("day");
+        hour = getArguments().getInt("hour");
+        minute = getArguments().getInt("minute");
     }
 
     private void createAlarmCalendar() {
@@ -40,7 +41,7 @@ public class CalendarDialogFragment extends DialogFragment {
     }
 
     private void createAlarmPickerDialog() {
-        datePickerDialog = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month - 1, day);
+        datePickerDialog = new DatePickerDialog(getActivity(), (DatePickerDialog.OnDateSetListener) getActivity(), year, month, day);
         datePickerDialog.getDatePicker().setMinDate(getMinDate());
         datePickerDialog.getDatePicker().setFirstDayOfWeek(Calendar.MONDAY);
     }
@@ -54,6 +55,7 @@ public class CalendarDialogFragment extends DialogFragment {
     }
 
     private boolean alarmDateIsBeforeNow() {
-        return alarmDate.before(Calendar.getInstance());
+        System.out.println("AFTER: " + alarmDate.getTime() + ", NOW: " + Calendar.getInstance().getTime());
+        return !alarmDate.after(Calendar.getInstance());
     }
 }

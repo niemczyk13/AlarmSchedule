@@ -1,15 +1,13 @@
 package com.example.alarmschedule.view.alarm.schedule.adarm.datetime;
 
-import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.schedule.ScheduleProcessor;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Week {
-    private Map<DayOfWeek, Boolean> days;
-    private DayOfWeek[] orderOfDays;
+    private final Map<DayOfWeek, Boolean> days;
+    private final DayOfWeek[] orderOfDays;
 
     public Week() {
         days = new HashMap<>();
@@ -54,39 +52,14 @@ public class Week {
         return daysList;
     }
 
-    public List<DayOfWeek> getDaysSortedFromSelectedDay(int dayOfWeekValue) {
-        DayOfWeek dayOfWeek = getDayOfWeek(dayOfWeekValue);
-        List<DayOfWeek> sortedDays;
-        sortedDays = getOnlySelectedDays();
-        sortedDays = sortedFromSelectedDay(sortedDays, dayOfWeek);
-
-        return sortedDays;
-    }
-
-    private List<DayOfWeek> sortedFromSelectedDay(List<DayOfWeek> sortedDays, DayOfWeek dayOfWeek) {
-        //TODO
-
-
-        return null;// ScheduleProcessor.filterAndSortSelectionDays(dayOfWeek.getValue(),sortedDays);
-    }
-
     public List<DayOfWeek> getOnlySelectedDays() {
         List<DayOfWeek> list = new ArrayList<>();
-        for (int i = 0; i < orderOfDays.length; i++) {
-            if (days.get(orderOfDays[i])) {
-                list.add(orderOfDays[i]);
+        for (DayOfWeek orderOfDay : orderOfDays) {
+            if (days.get(orderOfDay)) {
+                list.add(orderOfDay);
             }
         }
         return list;
-    }
-
-    private DayOfWeek getDayOfWeek(int dayOfWeekValue) {
-        for (DayOfWeek d : orderOfDays) {
-            if (d.getValue() == dayOfWeekValue) {
-                return d;
-            }
-        }
-        return null;
     }
 
     public boolean isSchedule() {
@@ -94,5 +67,11 @@ public class Week {
             if (value) return true;
         }
         return false;
+    }
+
+    public void clear() {
+        for (DayOfWeek day : orderOfDays) {
+            days.put(day, false);
+        }
     }
 }

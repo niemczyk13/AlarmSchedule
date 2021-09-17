@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setContentView(R.layout.activity_main);
         alarmSchedule = findViewById(R.id.alarm_schedule);
         alarmSchedule.initialize(createTestAlarmDateTime(), getSupportFragmentManager());
+
+
+        alarmSchedule.setTime(8,12);
     }
 
     private AlarmDateTime createTestAlarmDateTime() {
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         //week.activeDay(DayOfWeek.THURSDAY);
         WeekSchedule weekSchedule = new WeekSchedule(week);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2021, 8, 10, 10,9, 0);
+        calendar.set(2021, 8, 10, 16,35, 0);
         return new AlarmDateTime(calendar, weekSchedule);
     }
 

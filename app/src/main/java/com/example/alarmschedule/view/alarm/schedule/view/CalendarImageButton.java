@@ -21,6 +21,7 @@ public class CalendarImageButton {
     private FragmentManager fragmentManager;
     private LinearLayout calendarButtonLinearLayout;
     private ImageButton calendarButton;
+    private CalendarImageButtonClickListener calendarImageButtonClickListener;
 
     public CalendarImageButton(Context context, int weight) {
         this.context = context;
@@ -57,17 +58,18 @@ public class CalendarImageButton {
     }
 
     private void onClick(View view) {
+        calendarImageButtonClickListener.updateDateTimeBeforeClick();
         showCalendarDialogFragment();
     }
 
     private void showCalendarDialogFragment() {
         DialogFragment df = new CalendarDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("hour", Integer.toString(alarmDateTime.get(Calendar.HOUR)));
-        bundle.putString("minute", Integer.toString(alarmDateTime.get(Calendar.MINUTE)));
-        bundle.putString("day", Integer.toString(alarmDateTime.get(Calendar.DAY_OF_MONTH)));
-        bundle.putString("month", Integer.toString(alarmDateTime.get(Calendar.MONTH)));
-        bundle.putString("year", Integer.toString(alarmDateTime.get(Calendar.YEAR)));
+        bundle.putInt("hour", alarmDateTime.get(Calendar.HOUR_OF_DAY));
+        bundle.putInt("minute", alarmDateTime.get(Calendar.MINUTE));
+        bundle.putInt("day", alarmDateTime.get(Calendar.DAY_OF_MONTH));
+        bundle.putInt("month", alarmDateTime.get(Calendar.MONTH));
+        bundle.putInt("year", alarmDateTime.get(Calendar.YEAR));
         df.setArguments(bundle);
         df.show(fragmentManager, "date");
     }
@@ -82,5 +84,13 @@ public class CalendarImageButton {
 
     public void setFragmentManager(FragmentManager supportFragmentManager) {
         fragmentManager = supportFragmentManager;
+    }
+
+    public void addCalendarImageButtonClickListener(CalendarImageButtonClickListener listener) {
+        this.calendarImageButtonClickListener = listener;
+    }
+
+    public interface CalendarImageButtonClickListener {
+        void updateDateTimeBeforeClick();
     }
 }

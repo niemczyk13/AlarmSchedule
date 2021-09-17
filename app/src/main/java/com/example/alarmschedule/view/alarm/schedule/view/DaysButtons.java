@@ -18,6 +18,7 @@ public class DaysButtons {
     private ImageButton checkAllDaysButton;
     private String[] daysNames;
     private OnClickDayButtonListener onClickDayButtonListener;
+    private OnClickUncheckAllDaysButtonsListener onClickUncheckAllDaysButtonsListener;
 
     public DaysButtons(Context context) {
         this.context = context;
@@ -112,11 +113,10 @@ public class DaysButtons {
     }
 
     private void createCheckAllDaysButton(Context context) {
-        //TODO dodać metodę nasłuchującą
         checkAllDaysButton = new ImageButton(context);
         LinearLayout.LayoutParams params = getDefaultLayoutParamsForCheckAllDayButton();
-
         checkAllDaysButton.setLayoutParams(params);
+
         checkAllDaysButton.setId(View.generateViewId());
         checkAllDaysButton.setOnClickListener(this::onAllDaysButtonClick);
         checkAllDaysButton.setImageResource(R.drawable.ic_baseline_select_all_24);
@@ -140,11 +140,14 @@ public class DaysButtons {
     private void onAllDaysButtonClick(View view) {
         if (allDayButtonIsChecked()) {
             uncheckAllDays();
+            if (onClickUncheckAllDaysButtonsListener != null) {
+                onClickUncheckAllDaysButtonsListener.uncheckAll();
+            }
         } else {
             checkAllDaysButtons();
-        }
-        if (onClickDayButtonListener != null) {
-            onClickDayButtonListener.onClick();
+            if (onClickDayButtonListener != null) {
+                onClickDayButtonListener.onClick();
+            }
         }
     }
 
@@ -203,10 +206,6 @@ public class DaysButtons {
         return week;
     }
 
-    public void addOnClickDayButtonListener(OnClickDayButtonListener onClickDayButtonListener) {
-        this.onClickDayButtonListener = onClickDayButtonListener;
-    }
-
     public void setWeek(Week weekSchedule) {
         daysButtons[0].setChecked(weekSchedule.dayIsChecked(DayOfWeek.MONDAY));
         daysButtons[1].setChecked(weekSchedule.dayIsChecked(DayOfWeek.TUESDAY));
@@ -224,7 +223,33 @@ public class DaysButtons {
 
     }
 
+    public void uncheckWeek() {
+        daysButtons[0].setChecked(false);
+        daysButtons[1].setChecked(false);
+        daysButtons[2].setChecked(false);
+        daysButtons[3].setChecked(false);
+        daysButtons[4].setChecked(false);
+        daysButtons[5].setChecked(false);
+        daysButtons[6].setChecked(false);
+
+        for (MaterialButton button: daysButtons) {
+            setUncheckColorButton(button);
+        }
+    }
+
+    public void addOnClickDayButtonListener(OnClickDayButtonListener onClickDayButtonListener) {
+        this.onClickDayButtonListener = onClickDayButtonListener;
+    }
+
     public interface OnClickDayButtonListener {
         void onClick();
+    }
+
+    public void addOnClickUncheckAllDaysButtonsListener(OnClickUncheckAllDaysButtonsListener listener) {
+        this.onClickUncheckAllDaysButtonsListener = listener;
+    }
+
+    public interface OnClickUncheckAllDaysButtonsListener {
+        void uncheckAll();
     }
 }

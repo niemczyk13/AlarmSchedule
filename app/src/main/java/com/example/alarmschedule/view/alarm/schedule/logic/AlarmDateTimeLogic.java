@@ -8,10 +8,9 @@ import com.example.alarmschedule.view.alarm.schedule.view.InfoTextView;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
 
 public class AlarmDateTimeLogic {
-    //private AlarmDateTime alarmDateTime;
-    private DaysButtons daysButtons;
-    private InfoTextView infoTextView;
-    private CalendarImageButton calendarImageButton;
+    private final DaysButtons daysButtons;
+    private final InfoTextView infoTextView;
+    private final CalendarImageButton calendarImageButton;
 
     public AlarmDateTimeLogic(DaysButtons daysButtons, InfoTextView infoTextView, CalendarImageButton calendarImageButton) {
         this.daysButtons = daysButtons;
@@ -19,37 +18,47 @@ public class AlarmDateTimeLogic {
         this.calendarImageButton = calendarImageButton;
 
         addOnClickDayButtonListener();
+        addOnClickCalendarImageButtonListener();
+        addOnClickCheckAllDaysButtonsListener();
     }
 
-    //TODO
+    private void addOnClickCheckAllDaysButtonsListener() {
+        daysButtons.addOnClickUncheckAllDaysButtonsListener(() -> {
+            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.allDaysUncheck();
+            infoTextView.showInfoText(alarmDateTime);
+        });
+    }
+
     public void initialize(AlarmDateTime adt, FragmentManager supportFragmentManager) {
-        //TODO tutaj alarmDateTime musi być przerobione !
-        //TODO godzina zawsze zostaje ta sama, zmieniamy tylko datę
-        //TODO w zależności od harmonogramu czy jest czy nie ma
-        //alarmDateTime = Static klasa przerabiajca
         AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.update(adt);
         daysButtons.setWeek(alarmDateTime.getWeekSchedule());
-        calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
         calendarImageButton.setFragmentManager(supportFragmentManager);
         infoTextView.showInfoText(alarmDateTime);
     }
 
     private void addOnClickDayButtonListener() {
         daysButtons.addOnClickDayButtonListener(() -> {
-            //TODO
-            System.out.println("isSchedule: " + daysButtons.isSchedule());
+            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.setWeek(daysButtons.getWeek());
+            infoTextView.showInfoText(alarmDateTime);
         });
     }
 
-    //TODO
-    public void setTime(int hour, int minute) {
-        System.out.println("TIME: " + hour + ":" + minute);
+
+    private void addOnClickCalendarImageButtonListener() {
+        calendarImageButton.addCalendarImageButtonClickListener(() -> {
+            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.getAlarmDateTime();
+            calendarImageButton.setAlarmDateTime(alarmDateTime.getDateTime());
+        });
     }
 
-    //TODO
+    public void setTime(int hour, int minute) {
+        AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.updateTime(hour, minute);
+        infoTextView.showInfoText(alarmDateTime);
+    }
+
     public void setDate(int year, int month, int day) {
-        System.out.println("DATE: " + year + "-" + month + "-" + day);
-        //TODO AlarmDateTimeUpdater.setDate(...);
-        //TODO odnzaczyć wszystkie dni - zaktualizować DaysButtons
+        AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.setDate(year, month, day);
+        daysButtons.uncheckWeek();
+        infoTextView.showInfoText(alarmDateTime);
     }
 }

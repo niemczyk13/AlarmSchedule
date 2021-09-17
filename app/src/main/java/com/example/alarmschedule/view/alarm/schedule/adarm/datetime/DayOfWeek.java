@@ -11,7 +11,7 @@ public enum DayOfWeek {
     SATURDAY(Calendar.SATURDAY),
     SUNDAY(Calendar.SUNDAY);
 
-    private int value;
+    private final int value;
 
     DayOfWeek(int value) {
         this.value = value;

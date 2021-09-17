@@ -13,14 +13,7 @@ import com.example.alarmschedule.view.alarm.schedule.logic.AlarmDateTimeLogic;
 
 public class AlarmSchedule extends LinearLayout {
     private AlarmDateTimeLogic logic;
-
     private ViewBuilder viewBuilder;
-    private AlarmDateTime alarmDateTime;
-
-    private DaysButtons daysButtons;
-    private InfoTextView infoTextView;
-    private CalendarImageButton calendarImageButton;
-
 
     public AlarmSchedule(Context context) {
         super(context);
@@ -41,7 +34,6 @@ public class AlarmSchedule extends LinearLayout {
         viewBuilder = new ViewBuilder(super.getContext());
         setPropertiesToMainLinearLayout();
         addViewsToMainLinearLayout();
-        getViewsFromBuilder();
         createAlarmDateTimeLogic();
     }
 
@@ -56,14 +48,8 @@ public class AlarmSchedule extends LinearLayout {
         super.addView(viewBuilder.getSecondLineLayout());
     }
 
-    private void getViewsFromBuilder() {
-        infoTextView = viewBuilder.getInfoTextView();
-        calendarImageButton = viewBuilder.getCalendarImageButton();
-        daysButtons = viewBuilder.getDaysButtons();
-    }
-
     private void createAlarmDateTimeLogic() {
-        logic = new AlarmDateTimeLogic(daysButtons, infoTextView, calendarImageButton);
+        logic = new AlarmDateTimeLogic(viewBuilder.getDaysButtons(), viewBuilder.getInfoTextView(), viewBuilder.getCalendarImageButton());
     }
 
     public void initialize(AlarmDateTime alarmDateTime, FragmentManager supportFragmentManager) {
@@ -75,6 +61,6 @@ public class AlarmSchedule extends LinearLayout {
     }
 
     public void setDate(int year, int month, int day) {
-        logic.setDate(year, month + 1, day);
+        logic.setDate(year, month, day);
     }
 }
