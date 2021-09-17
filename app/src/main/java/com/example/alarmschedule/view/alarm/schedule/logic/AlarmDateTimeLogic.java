@@ -19,10 +19,10 @@ public class AlarmDateTimeLogic {
 
         addOnClickDayButtonListener();
         addOnClickCalendarImageButtonListener();
-        addOnClickCheckAllDaysButtonsListener();
+        addOnClickUncheckAllDaysButtonsListener();
     }
 
-    private void addOnClickCheckAllDaysButtonsListener() {
+    private void addOnClickUncheckAllDaysButtonsListener() {
         daysButtons.addOnClickUncheckAllDaysButtonsListener(() -> {
             AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.allDaysUncheck();
             infoTextView.showInfoText(alarmDateTime);
