@@ -67,7 +67,7 @@ public class AlarmDateTimeUpdater {
         return alarmDateTime;
     }
 
-    public static AlarmDateTime setDate(int year, int month, int day) {
+    public static AlarmDateTime updateDate(int year, int month, int day) {
         alarmDateTime.getDateTime().set(Calendar.YEAR, year);
         alarmDateTime.getDateTime().set(Calendar.MONTH, month);
         alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, day);
@@ -80,17 +80,17 @@ public class AlarmDateTimeUpdater {
         return alarmDateTime;
     }
 
-    public static AlarmDateTime setWeek(Week week) {
+    public static AlarmDateTime updateWeek(Week week) {
         alarmDateTime.setWeek(week);
         if (week.isSchedule()) {
             calculateDateForSchedule();
         } else {
-            allDaysUncheck();
+            updateForAllDaysUncheck();
         }
         return alarmDateTime;
     }
 
-    public static AlarmDateTime allDaysUncheck() {
+    public static AlarmDateTime updateForAllDaysUncheck() {
         alarmDateTime.getWeek().clear();
         Calendar date = getCalendarInstance();
         alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));

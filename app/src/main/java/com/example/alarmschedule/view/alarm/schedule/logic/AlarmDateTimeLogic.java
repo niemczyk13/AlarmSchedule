@@ -24,7 +24,7 @@ public class AlarmDateTimeLogic {
 
     private void addOnClickUncheckAllDaysButtonsListener() {
         daysButtons.addOnClickUncheckAllDaysButtonsListener(() -> {
-            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.allDaysUncheck();
+            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.updateForAllDaysUncheck();
             infoTextView.showInfoText(alarmDateTime);
         });
     }
@@ -38,7 +38,7 @@ public class AlarmDateTimeLogic {
 
     private void addOnClickDayButtonListener() {
         daysButtons.addOnClickDayButtonListener(() -> {
-            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.setWeek(daysButtons.getWeek());
+            AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.updateWeek(daysButtons.getWeek());
             infoTextView.showInfoText(alarmDateTime);
         });
     }
@@ -57,7 +57,7 @@ public class AlarmDateTimeLogic {
     }
 
     public void setDate(int year, int month, int day) {
-        AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.setDate(year, month, day);
+        AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.updateDate(year, month, day);
         daysButtons.uncheckWeek();
         infoTextView.showInfoText(alarmDateTime);
     }
