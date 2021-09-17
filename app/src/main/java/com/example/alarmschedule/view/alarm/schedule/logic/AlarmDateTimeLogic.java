@@ -31,7 +31,7 @@ public class AlarmDateTimeLogic {
 
     public void initialize(AlarmDateTime adt, FragmentManager supportFragmentManager) {
         AlarmDateTime alarmDateTime = AlarmDateTimeUpdater.update(adt);
-        daysButtons.setWeek(alarmDateTime.getWeekSchedule());
+        daysButtons.setWeek(alarmDateTime.getWeek());
         calendarImageButton.setFragmentManager(supportFragmentManager);
         infoTextView.showInfoText(alarmDateTime);
     }

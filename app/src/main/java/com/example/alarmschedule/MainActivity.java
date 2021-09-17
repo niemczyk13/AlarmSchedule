@@ -10,7 +10,6 @@ import com.example.alarmschedule.view.alarm.schedule.view.AlarmSchedule;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.DayOfWeek;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.AlarmDateTime;
 import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.Week;
-import com.example.alarmschedule.view.alarm.schedule.adarm.datetime.WeekSchedule;
 
 import java.util.Calendar;
 
@@ -33,10 +32,9 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         //week.activeDay(DayOfWeek.MONDAY);
         week.activeDay(DayOfWeek.FRIDAY);
         //week.activeDay(DayOfWeek.THURSDAY);
-        WeekSchedule weekSchedule = new WeekSchedule(week);
         Calendar calendar = Calendar.getInstance();
         calendar.set(2021, 8, 10, 16,35, 0);
-        return new AlarmDateTime(calendar, weekSchedule);
+        return new AlarmDateTime(calendar, week);
     }
 
     @Override

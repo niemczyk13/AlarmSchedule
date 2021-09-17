@@ -16,7 +16,6 @@ public class AlarmDateTimeUpdater {
 
         if (alarmDateTime.isSchedule()) {
             calculateDateForSchedule();
-            System.out.println("Date for schedule: " + alarmDateTime.getDateTime().getTime());
         } else {
             calculateOrdinaryDate();
         }
@@ -25,11 +24,10 @@ public class AlarmDateTimeUpdater {
 
     //TODO do dokończenia!!!!!!!!!!!!!!!!!!!!!!! do sprawdzenia!!!!!!!!!!!!!!!!!!!11
     private static void calculateDateForSchedule() {
-        List<DayOfWeek> days = alarmDateTime.getWeekSchedule().getOnlySelectedDays();
+        List<DayOfWeek> days = alarmDateTime.getWeek().getOnlySelectedDays();
         Calendar date = getCalendarInstance();
         for (DayOfWeek day : days) {
             date.set(Calendar.DAY_OF_WEEK, day.getValue());
-            System.out.println("Date: " + date.getTime() + ", day.getValue(): " + day.getValue());
             alarmDateTime.getDateTime().set(Calendar.YEAR, date.get(Calendar.YEAR));
             alarmDateTime.getDateTime().set(Calendar.MONTH, date.get(Calendar.MONTH));
             alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
@@ -73,7 +71,7 @@ public class AlarmDateTimeUpdater {
         alarmDateTime.getDateTime().set(Calendar.YEAR, year);
         alarmDateTime.getDateTime().set(Calendar.MONTH, month);
         alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, day);
-        alarmDateTime.getWeekSchedule().clear();
+        alarmDateTime.getWeek().clear();
 
         return alarmDateTime;
     }
@@ -83,11 +81,9 @@ public class AlarmDateTimeUpdater {
     }
 
     public static AlarmDateTime setWeek(Week week) {
-        alarmDateTime.setWeekSchedule(week);
+        alarmDateTime.setWeek(week);
         if (week.isSchedule()) {
             calculateDateForSchedule();
-            System.out.println("Date for schedule: " + alarmDateTime.getDateTime().getTime());
-
         } else {
             allDaysUncheck();
         }
@@ -95,7 +91,7 @@ public class AlarmDateTimeUpdater {
     }
 
     public static AlarmDateTime allDaysUncheck() {
-        alarmDateTime.getWeekSchedule().clear();
+        alarmDateTime.getWeek().clear();
         Calendar date = getCalendarInstance();
         alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
         calculateOrdinaryDate();

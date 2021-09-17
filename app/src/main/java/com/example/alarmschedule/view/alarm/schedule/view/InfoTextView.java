@@ -39,7 +39,7 @@ public class InfoTextView {
     public void showInfoText(AlarmDateTime alarmDateTime) {
         String text;
         if (alarmDateTime.isSchedule()) {
-            text = DateTextGenerator.generate(alarmDateTime.getWeekSchedule());
+            text = DateTextGenerator.generate(alarmDateTime.getWeek());
         } else {
             text = DateTextGenerator.generate(alarmDateTime.getDateTime());
         }

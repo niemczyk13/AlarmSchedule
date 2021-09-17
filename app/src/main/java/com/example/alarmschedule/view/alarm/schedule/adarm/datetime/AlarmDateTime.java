@@ -4,11 +4,11 @@ import java.util.Calendar;
 
 public class AlarmDateTime {
     private Calendar dateTime;
-    private WeekSchedule weekSchedule;
+    private Week week;
 
-    public AlarmDateTime(Calendar dateTime, WeekSchedule weekSchedule) {
+    public AlarmDateTime(Calendar dateTime, Week week) {
         this.dateTime = dateTime;
-        this.weekSchedule = weekSchedule;
+        this.week = week;
     }
 
     public Calendar getDateTime() {
@@ -19,15 +19,15 @@ public class AlarmDateTime {
         this.dateTime = dateTime;
     }
 
-    public Week getWeekSchedule() {
-        return weekSchedule.getWeek();
+    public Week getWeek() {
+        return week;
     }
 
-    public void setWeekSchedule(Week week) {
-        this.weekSchedule.setWeek(week);
+    public void setWeek(Week week) {
+        this.week = week;
     }
 
     public boolean isSchedule() {
-        return weekSchedule.isActive();
+        return week.isSchedule();
     }
 }
