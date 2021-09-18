@@ -63,4 +63,8 @@ public class AlarmSchedule extends LinearLayout {
     public void setDate(int year, int month, int day) {
         logic.setDate(year, month, day);
     }
+
+    public AlarmDateTime getAlarmDateTime() {
+        return logic.getAlarmDateTime();
+    }
 }

@@ -101,4 +101,9 @@ public class AlarmDateTimeUpdater {
         calculateOrdinaryDate();
         return alarmDateTime;
     }
+
+    public static AlarmDateTime getFinalVersionAlarmDateTime() {
+        alarmDateTime = update(alarmDateTime);
+        return alarmDateTime;
+    }
 }

@@ -61,4 +61,8 @@ public class AlarmDateTimeLogic {
         daysButtons.uncheckWeek();
         infoTextView.showInfoText(alarmDateTime);
     }
+
+    public AlarmDateTime getAlarmDateTime() {
+        return AlarmDateTimeUpdater.getFinalVersionAlarmDateTime();
+    }
 }
