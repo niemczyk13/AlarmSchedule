@@ -23,15 +23,15 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         alarmSchedule.initialize(createTestAlarmDateTime(), getSupportFragmentManager());
 
 
-        alarmSchedule.setTime(8,12);
+        alarmSchedule.setTime(18,12);
     }
 
     private AlarmDateTime createTestAlarmDateTime() {
         //TODO w ramach testu data na sztywno
         Week week = new Week();
         //week.activeDay(DayOfWeek.MONDAY);
-        week.activeDay(DayOfWeek.FRIDAY);
-        //week.activeDay(DayOfWeek.THURSDAY);
+        //week.activeDay(DayOfWeek.SATURDAY);
+        week.activeDay(DayOfWeek.THURSDAY);
         Calendar calendar = Calendar.getInstance();
         calendar.set(2021, 8, 10, 16,35, 0);
         return new AlarmDateTime(calendar, week);

@@ -48,14 +48,22 @@ public class CalendarDialogFragment extends DialogFragment {
 
     private long getMinDate() {
         long minDate = System.currentTimeMillis();
-        if (alarmDateIsBeforeNow()) {
+        if (alarmTimeIsBeforeNow()) {
             minDate += ONE_DAY;
         }
         return minDate;
     }
 
-    private boolean alarmDateIsBeforeNow() {
+    private boolean alarmTimeIsBeforeNow() {
         System.out.println("AFTER: " + alarmDate.getTime() + ", NOW: " + Calendar.getInstance().getTime());
-        return !alarmDate.after(Calendar.getInstance());
+        Calendar now = Calendar.getInstance();
+        int hourNow = now.get(Calendar.HOUR_OF_DAY);
+        int minuteNow = now.get(Calendar.MINUTE);
+
+        int hourAlarm = alarmDate.get(Calendar.HOUR_OF_DAY);
+        int minuteAlarm = alarmDate.get(Calendar.MINUTE);
+
+        if (hourAlarm > hourNow) return false;
+        else return hourAlarm != hourNow || minuteAlarm <= minuteNow;
     }
 }

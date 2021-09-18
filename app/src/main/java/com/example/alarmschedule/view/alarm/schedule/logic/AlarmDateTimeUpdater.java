@@ -9,6 +9,7 @@ import java.util.List;
 
 public class AlarmDateTimeUpdater {
     private static final int ONE_DAY = 1;
+    private static final int ONE_WEEK = 7;
     private static AlarmDateTime alarmDateTime;
 
     public static AlarmDateTime update(AlarmDateTime adt) {
@@ -22,21 +23,25 @@ public class AlarmDateTimeUpdater {
         return alarmDateTime;
     }
 
-    //TODO do dokończenia!!!!!!!!!!!!!!!!!!!!!!! do sprawdzenia!!!!!!!!!!!!!!!!!!!11
     private static void calculateDateForSchedule() {
         List<DayOfWeek> days = alarmDateTime.getWeek().getOnlySelectedDays();
-        Calendar date = getCalendarInstance();
+
         for (DayOfWeek day : days) {
+            Calendar date = getCalendarInstance();
             date.set(Calendar.DAY_OF_WEEK, day.getValue());
-            alarmDateTime.getDateTime().set(Calendar.YEAR, date.get(Calendar.YEAR));
-            alarmDateTime.getDateTime().set(Calendar.MONTH, date.get(Calendar.MONTH));
-            alarmDateTime.getDateTime().set(Calendar.DAY_OF_MONTH, date.get(Calendar.DAY_OF_MONTH));
+            Calendar now = getCalendarInstance();
+            alarmDateTime.getDateTime().set(Calendar.YEAR, now.get(Calendar.YEAR));
+            alarmDateTime.getDateTime().set(Calendar.WEEK_OF_YEAR, now.get(Calendar.WEEK_OF_YEAR));
+            alarmDateTime.getDateTime().set(Calendar.DAY_OF_WEEK, day.getValue());
             if (alarmDateTime.getDateTime().after(getCalendarInstance())) {
                 return;
             }
         }
-
+        Calendar now = getCalendarInstance();
+        alarmDateTime.getDateTime().set(Calendar.YEAR, now.get(Calendar.YEAR));
+        alarmDateTime.getDateTime().set(Calendar.WEEK_OF_YEAR, now.get(Calendar.WEEK_OF_YEAR));
         alarmDateTime.getDateTime().set(Calendar.DAY_OF_WEEK, days.get(0).getValue());
+        alarmDateTime.getDateTime().add(Calendar.DAY_OF_YEAR, ONE_WEEK);
     }
 
     private static Calendar getCalendarInstance() {
@@ -46,7 +51,6 @@ public class AlarmDateTimeUpdater {
     }
 
     private static void calculateOrdinaryDate() {
-        System.out.println();
         if (alarmIsBeforeNow()) {
             int date = getCalendarInstance().get(Calendar.DATE);
             alarmDateTime.getDateTime().set(Calendar.DATE, date);

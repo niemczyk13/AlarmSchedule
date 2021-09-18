@@ -28,10 +28,6 @@ public class Week {
         days.put(day, true);
     }
 
-    public void deactivateDay(DayOfWeek day) {
-        days.put(day, false);
-    }
-
     public void setDay(DayOfWeek day, Boolean checked) {
         days.put(day, checked);
     }
